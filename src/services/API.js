@@ -20,7 +20,7 @@ const useAPI = () => {
       const res = await fetch(topRatedUrl)
       const data = await res.json()
       const pages = data.total_pages
-      // console.log(pages)
+  
       setData(data.results)
     },
 
@@ -30,7 +30,6 @@ const useAPI = () => {
 
       const res = await fetch(searchWithQueryURL)
       const data = await res.json()
-      console.log(data)
       setData(data.results)
 
 

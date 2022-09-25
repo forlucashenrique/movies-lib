@@ -18,7 +18,6 @@ const Home = () => {
     const res = await fetch(url)
     const data = await res.json()
     setTotalPages(data.total_pages)
-    console.log(data.results)
   }
 
 
@@ -57,7 +56,7 @@ const Home = () => {
             
           ))}
       </div>
-      
+
       <p className='pages'>Page {pageNumber} de {totalPages}</p>
       <div className="">
         <button className='pages btn' onClick={backPage}>Back</button>

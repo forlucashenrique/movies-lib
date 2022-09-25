@@ -20,7 +20,6 @@ const Search = () => {
     const res = await fetch(url)
     const data = await res.json()
     setTotalPages(data.total_pages)
-    console.log(data.results)
   }
 
 
