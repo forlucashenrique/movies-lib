@@ -36,7 +36,6 @@ const Home = () => {
   }
 
   
-
   useEffect(() => {
     getTotalPages()
     getTopRateMovies(setTopMovies, pageNumber)

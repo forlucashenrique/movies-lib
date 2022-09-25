@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
-import { useSearchParams } from 'react-router-dom'
+
+import { useParams } from 'react-router-dom'
 import MovieCard from '../components/MovieCard'
 import useAPI from '../services/API'
 
@@ -8,8 +9,8 @@ import './MoviesGrid.css'
 const Search = () => {
   const [movies, setMovies] = useState([])
 
-  const [searchParams] = useSearchParams()
-  const query = searchParams.get('q')
+
+  const {query} = useParams()
   const {getSearchedMovies} = useAPI()
 
   const [pageNumber, setPageNumber] = useState(1)
@@ -19,6 +20,7 @@ const Search = () => {
     const url = `https://api.themoviedb.org/3/search/movie/?api_key=fc39de80b27fbee5fdd0cb397974ab16&query=${query}`
     const res = await fetch(url)
     const data = await res.json()
+    console.log(url)
     setTotalPages(data.total_pages)
   }
 
@@ -39,7 +41,7 @@ const Search = () => {
 
   useEffect(() => {  
     getTotalPages()
-    getSearchedMovies(query, setMovies, pageNumber)
+    getSearchedMovies(setMovies, query, pageNumber)
   }, [query, pageNumber])
 
   return (
