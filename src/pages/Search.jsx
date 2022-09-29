@@ -14,13 +14,13 @@ const Search = () => {
   const {getSearchedMovies} = useAPI()
 
   const [pageNumber, setPageNumber] = useState(1)
-  const [totalPages, setTotalPages] = useState()
 
+  const [totalPages, setTotalPages] = useState()
+  
   const getTotalPages = async () => {
-    const url = `https://api.themoviedb.org/3/search/movie/?api_key=fc39de80b27fbee5fdd0cb397974ab16&query=${query}`
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=fc39de80b27fbee5fdd0cb397974ab16&query=${query}`
     const res = await fetch(url)
     const data = await res.json()
-    console.log(url)
     setTotalPages(data.total_pages)
   }
 
