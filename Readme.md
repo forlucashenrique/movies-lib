@@ -3,6 +3,7 @@
 ##### Features implementadas por mim
 
 **1** - Simples paginação dos filmes
+
 **2** - Correção de bug de carregamento de conteúdo misto 
 
 
