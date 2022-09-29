@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-
+import { useSearchParams } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import MovieCard from '../components/MovieCard'
 import useAPI from '../services/API'
@@ -8,9 +8,9 @@ import './MoviesGrid.css'
 
 const Search = () => {
   const [movies, setMovies] = useState([])
-
-
-  const {query} = useParams()
+  const [searchParam] = useSearchParams()
+  const query = searchParam.get('q')
+  
   const {getSearchedMovies} = useAPI()
 
   const [pageNumber, setPageNumber] = useState(1)

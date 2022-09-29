@@ -27,8 +27,6 @@ const useAPI = () => {
     async getSearchedMovies(setData, query, page_id = 1){
       
       const searchWithQueryURL = `${searchURL}?${apiKey}&query=${query}&page=${page_id}`
-      console.log(searchWithQueryURL)
-
       const res = await fetch(searchWithQueryURL)
       const data = await res.json()
       setData(data.results)
