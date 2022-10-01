@@ -8,23 +8,58 @@ import './MoviesGrid.css'
 const Home = () => {
   
   const [topMovies, setTopMovies] = useState([])
-  const [pageNumber, setPageNumber] = useState(1)
-  const {getTopRateMovies} = useAPI()
+  const [pageNumber, setPageNumber] = useState()
+  const [genres, setGenres] = useState([])
+  const [genreSelected, setGenreSelected] = useState('all')
+  const {getTopRateMovies, getTotalPages} = useAPI()
   
   const [totalPages, setTotalPages] = useState()
 
-  const getTotalPages = async () => {
-    const url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=fc39de80b27fbee5fdd0cb397974ab16'
-    const res = await fetch(url)
+  
+  const getGenres = async () => {
+    const url = import.meta.env.VITE_API_URL_GENRES
+    const apiKey = import.meta.env.VITE_API_KEY
+    const fullUrl = `${url}${apiKey}&language=pt-BR`
+
+    const res = await fetch(fullUrl)
     const data = await res.json()
-    setTotalPages(data.total_pages)
+    // console.log(data)
+    setGenres(data.genres)
   }
 
+  const findMovies = async (event) => {
+    const selectedIndexOpt = event.target.options.selectedIndex
+    const optSelected = event.target.options[selectedIndexOpt]
+    // console.log(optSelected.id)
+
+    const url = import.meta.env.VITE_API_URL_DISCOVER
+    const apiKey = import.meta.env.VITE_API_KEY
+    const fullUrl = `${url}${apiKey}&with_genres=${optSelected.id}&sort_by=vote_count.desc`
+    const res = await fetch(fullUrl)
+    const data = await res.json()
+
+    getTotalPages(setTotalPages, fullUrl)
+
+    // console.log(data)
+    setTopMovies(data.results)
+  }
+
+  const changeGenre = (event) => {
+    const selectedIndexOpt = event.target.options.selectedIndex
+    const optSelected = event.target.options[selectedIndexOpt]
+    console.log(optSelected.id)
+    setGenreSelected(optSelected.id)
+  
+    setPageNumber(1)
+
+
+  }
 
   const nextPage = () => {
     if(pageNumber <= totalPages){
       const newPage = pageNumber + 1
       setPageNumber(newPage)
+      // getTopRateMovies(setTopMovies, pageNumber)
     }
   }
 
@@ -37,15 +72,28 @@ const Home = () => {
 
   
   useEffect(() => {
-    getTotalPages()
-    getTopRateMovies(setTopMovies, pageNumber)
+    
+    getTotalPages(setTotalPages)
+    getGenres()
+    getTopRateMovies(setTopMovies, genreSelected, pageNumber)
   }, [pageNumber])
 
 
   return (
     <div className='container'>
       <h2 className='title'>Melhores filmes</h2>
-     
+      <select onChange={changeGenre}>
+        <option value="todos" id="all" selected>Todos</option>
+        {genres && (
+          genres.map(genre => (
+            <option key={genre.id} id={genre.id} value={genre.name.toLowerCase()}>{genre.name}</option>
+          ))
+        )
+
+        }
+
+        
+      </select>
       <div className="movies-container">
         {topMovies.length > 0 && 
             topMovies.map((movie) => (

@@ -39,3 +39,55 @@
   background-color: transparent;
   color: #f7d354;
 }
+
+/* Categorias */
+
+.categorias {
+  position: relative;
+  color: black;
+  background-color: #f7d354;
+  font-size: 1.2rem;
+  border-radius: 4px;
+  text-align: center;
+
+
+}
+
+.categorias span {
+  width: 100%;
+  padding: 1.2rem;
+}
+
+
+.dropdown {
+  position: absolute;
+  display: none;
+  width: 100%;
+  background-color: #f7d354;
+  color: black;
+}
+
+.dropdown p {
+  padding: .4rem;
+}
+
+.dropdown p:not(:last-child) {
+  border-bottom: black;
+}
+
+
+.categorias:hover .dropdown {
+  display: block;
+}
+
+.categorias:hover {
+  background-color: #c9b671;
+  cursor: default;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.dropdown p:hover {
+  background-color: #c9b671;
+  cursor: pointer;
+}
