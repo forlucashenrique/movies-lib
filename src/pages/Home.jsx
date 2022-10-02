@@ -8,7 +8,7 @@ import './MoviesGrid.css'
 const Home = () => {
   
   const [topMovies, setTopMovies] = useState([])
-  const [pageNumber, setPageNumber] = useState()
+  const [pageNumber, setPageNumber] = useState(1)
   const [genres, setGenres] = useState([])
   const [genreSelected, setGenreSelected] = useState('all')
   const {getTopRateMovies, getTotalPages} = useAPI()
@@ -49,9 +49,7 @@ const Home = () => {
     const optSelected = event.target.options[selectedIndexOpt]
     console.log(optSelected.id)
     setGenreSelected(optSelected.id)
-  
     setPageNumber(1)
-
 
   }
 
@@ -72,11 +70,10 @@ const Home = () => {
 
   
   useEffect(() => {
-    
-    getTotalPages(setTotalPages)
+    getTotalPages(setTotalPages, genreSelected)
     getGenres()
     getTopRateMovies(setTopMovies, genreSelected, pageNumber)
-  }, [pageNumber])
+  }, [pageNumber, genreSelected])
 
 
   return (

@@ -3,13 +3,16 @@ const useAPI = () => {
   const apiKey = import.meta.env.VITE_API_KEY
   const moviesURL = import.meta.env.VITE_API_URL
   const searchURL = import.meta.env.VITE_SEARCH
+  const discoverURL = import.meta.env.VITE_API_URL_DISCOVER
 
   return {
 
-    async getTotalPages(setData, url) {
+    async getTotalPages(setData, genreId) {
 
       
-      const urlTopRated = url || 'https://api.themoviedb.org/3/movie/top_rated?api_key=fc39de80b27fbee5fdd0cb397974ab16'
+      const urlTopRated = genreId === 'all' ? 
+      'https://api.themoviedb.org/3/movie/top_rated?api_key=fc39de80b27fbee5fdd0cb397974ab16' :
+      `${discoverURL}${apiKey}&with_genres=${genreId}&sort_by=vote_count.desc`
 
       const res = await fetch(urlTopRated)
       const data = await res.json()
@@ -25,13 +28,12 @@ const useAPI = () => {
       setData(data)
     },
     
-    async getTopRateMovies(setData, genre_id , page_id){
+    async getTopRateMovies(setData, genreId , pageId){
+      const pageNumber = pageId || 1
 
-      const url = import.meta.env.VITE_API_URL_DISCOVER
-
-      const topRatedUrl = genre_id === 'all' ? 
-        `${moviesURL}top_rated?${apiKey}&page=${page_id}` : 
-        `${url}${apiKey}&with_genres=${genre_id}&sort_by=vote_count.desc&page=${page_id || 1}`
+      const topRatedUrl = genreId === 'all' ? 
+        `${moviesURL}top_rated?${apiKey}&page=${pageNumber}` : 
+        `${discoverURL}${apiKey}&with_genres=${genreId}&sort_by=vote_count.desc&page=${pageNumber}`
      
       console.log(topRatedUrl)
       const res = await fetch(topRatedUrl)
