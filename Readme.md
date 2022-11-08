@@ -1,4 +1,4 @@
-#### Projeto desenvolvido a partir do tutorial do canal HoraDeCodar
+#### Projeto desenvolvido a partir do tutorial do canal HoraDeCodar / ReactJS + Consumindo API do The Movie Database
 
 ### Features implementadas por mim
 
